@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<meta charset="ISO-8859-1">
+		<title>Insert title here</title>
+	</head>
+	
+	<body>
+		<form>
+			<table>
+				<tr>
+					<td>Company</td> 
+					<td><input type="text" id="company"></td>
+				</tr>
+				<tr>
+					<td>Contact email</td> 
+					<td><input type="text" id="email"></td>
+				</tr>
+				<tr>
+					<td>Project description</td> 
+					<td><input type="text" id="description"></td>
+				</tr>
+				<tr>
+					<td>Tags</td> 
+					<td><input type="text" id="tags"></td>
+				</tr>
+				<tr>
+					<td>
+					<td><input type="button" onClick="save()" value="Lisää"></td>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<script>
+			function save(){
+			var project = {}; //Tehtiin JavaScript -olio, jonka nimi project
+			project.company = document.getElementById("company").value;
+			project.email = document.getElementById("email").value;
+			project.description = document.getElementById("description").value;
+			project.tag = document.getElementById("tags").value;
+			console.log(project);
+			
+			//Now we send the JSON -object to our REST service
+			$.ajax({
+        		url: '/project',
+        		type: 'post',
+        		dataType: 'json',
+        		contentType: "application/json; charset=utf-8",
+        		success: function (data) {
+            $('#target').html(data.msg);
+        },
+        data: JSON.stringify(project)
+    });
+}
+		</script>
+	</body>
+</html>
